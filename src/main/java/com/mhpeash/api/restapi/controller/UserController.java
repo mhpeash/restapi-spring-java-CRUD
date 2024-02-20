@@ -36,21 +36,15 @@ public class UserController {
     @GetMapping("/users/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
 
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException
-                        ("User not exist with id :" + id));
-
+        User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not exist with id :" + id));
         return ResponseEntity.ok(user);
     }
 
     // update user rest api
     @PutMapping("/users/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id,
-                                           @RequestBody User userDetails) {
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User userDetails) {
 
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException
-                        ("User not exist with id :" + id));
+        User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not exist with id :" + id));
         user.setFirstName(userDetails.getFirstName());
         user.setLastName(userDetails.getLastName());
         user.setEmailId(userDetails.getEmailId());
@@ -61,17 +55,13 @@ public class UserController {
 
     // delete user rest api
     @DeleteMapping("/users/{id}")
-    public ResponseEntity<Map<String, Boolean>> deleteUser
-    (@PathVariable Long id) {
+    public ResponseEntity<Map<String, Boolean>> deleteUser(@PathVariable Long id) {
 
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException
-                        ("User not exist with id :" + id));
+        User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not exist with id :" + id));
 
         userRepository.delete(user);
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);
-
         return ResponseEntity.ok(response);
     }
 }
